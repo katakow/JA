@@ -1,0 +1,7 @@
+C:\Users\Kasia\Downloads\JA_FILTER-laplace\JA_FILTER-laplace\GaussFilter.Algorithm\bin\Release\GaussFilter.Algorithm.dll.config
+C:\Users\Kasia\Downloads\JA_FILTER-laplace\JA_FILTER-laplace\GaussFilter.Algorithm\bin\Release\GaussFilter.Algorithm.dll
+C:\Users\Kasia\Downloads\JA_FILTER-laplace\JA_FILTER-laplace\GaussFilter.Algorithm\bin\Release\GaussFilter.Algorithm.pdb
+C:\Users\Kasia\Downloads\JA_FILTER-laplace\JA_FILTER-laplace\GaussFilter.Algorithm\obj\Release\GaussFilter.Algorithm.csprojAssemblyReference.cache
+C:\Users\Kasia\Downloads\JA_FILTER-laplace\JA_FILTER-laplace\GaussFilter.Algorithm\obj\Release\GaussFilter.Algorithm.csproj.CoreCompileInputs.cache
+C:\Users\Kasia\Downloads\JA_FILTER-laplace\JA_FILTER-laplace\GaussFilter.Algorithm\obj\Release\GaussFilter.Algorithm.dll
+C:\Users\Kasia\Downloads\JA_FILTER-laplace\JA_FILTER-laplace\GaussFilter.Algorithm\obj\Release\GaussFilter.Algorithm.pdb
