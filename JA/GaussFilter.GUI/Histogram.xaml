@@ -1,0 +1,63 @@
+﻿<Window x:Class="LaplaceFilter.Histogram"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LaplaceFilter"
+        xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        mc:Ignorable="d"
+        Title="Katarzyna Kowalczewska - Filtr Laplace'a - Histogram" Height="643.653" Width="1096.749">
+    <Grid>
+        <DVC:Chart Canvas.Top="80" Canvas.Left="10" x:Name="mcChart"
+            Background="LightSteelBlue" Margin="34,53,45.6,29">
+            <DVC:Chart.Series>
+                <DVC:LineSeries Title="Alpha" 
+        IndependentValueBinding="{Binding Path=Key}"
+        DependentValueBinding="{Binding Path=Value}">
+
+                    <DVC:LineSeries.DataPointStyle> 
+                        <Style TargetType="DVC:LineDataPoint" > 
+                            <Setter Property="Background" Value="Yellow" />
+                            <Setter Property="Opacity" Value="0" />
+                        </Style>
+                    </DVC:LineSeries.DataPointStyle>
+                   
+                </DVC:LineSeries>
+                <DVC:LineSeries Title="Red"
+        IndependentValueBinding="{Binding Path=Key}"
+        DependentValueBinding="{Binding Path=Value}">
+                    <DVC:LineSeries.DataPointStyle>
+                        <Style TargetType="DVC:LineDataPoint" >
+                            <Setter Property="Background" Value="Red" />
+                            <Setter Property="Opacity" Value="0" />
+                        </Style>
+                    </DVC:LineSeries.DataPointStyle>
+                </DVC:LineSeries>
+                <DVC:LineSeries Title="Green" 
+        IndependentValueBinding="{Binding Path=Key}"
+        DependentValueBinding="{Binding Path=Value}">
+                    <DVC:LineSeries.DataPointStyle>
+                        <Style TargetType="DVC:LineDataPoint" >
+                            <Setter Property="Background" Value="Green" />
+                            <Setter Property="Opacity" Value="0" />
+                        </Style>
+                    </DVC:LineSeries.DataPointStyle>
+                </DVC:LineSeries>
+
+                <DVC:LineSeries Title="Blue" 
+        IndependentValueBinding="{Binding Path=Key}"
+        DependentValueBinding="{Binding Path=Value}">
+                    <DVC:LineSeries.DataPointStyle>
+                        <Style TargetType="DVC:LineDataPoint" >
+                            <Setter Property="Background" Value="Blue" />
+                            <Setter Property="Opacity" Value="0" />
+                        </Style>
+                    </DVC:LineSeries.DataPointStyle>
+                </DVC:LineSeries>
+            </DVC:Chart.Series>
+        </DVC:Chart>
+
+        <TextBlock x:Name="typeImage" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Histogram obrazu " VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
