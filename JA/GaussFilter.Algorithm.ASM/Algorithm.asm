@@ -1,45 +1,18 @@
-﻿;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Temat projektu:						Filtr Laplace'a																					;
-; Autor:								Katarzyna Kowalczewska																			;
-; Przedmiot:							Języki Asemblerowe																				;
-; Kierunek:								Informatyka																						;
-; Semestr:								5																								;
-; Grupa dziekańska:						1																								;
-; Sekcja:								2																								;
-; Data wykonania projektu:				08.02.2021																						;
-; Krótki opis projektu:					Program nakłada na obraz wybrany przez użytkownika filtr Laplace'a.								;
-;										Filtr ten jest wykorzystywany do wyostrzenia krawędzi obrazu.									;
-;										Wczytany obraz, efekt końcowy oraz obliczony wcześniej histogram jest wyświetlony w programie.	;
-;										Biblioteka jest w C# oraz w asemblerze.															;
-;										Jest ona odpowiedzialna za algorytm wyostrzenia.												;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; CHANGELOG																																;
-;																																		;
-; version 0.1																															;
-; Short description of project, ideas about implemenation Laplace filter in Assembly.													;
-;																																		;
-; version 0.2																															;
-; First code in Assembly, checking if arguments are correctly transferred to dll file, and loaded to C#.								;
-;																																		;
-; version 0.3																															;
-; Implementation first part of Laplace algorithmm, short description of main loop in program.											;
-;																																		;
-; verion 0.4 																															;
-; Implementation the rest of Laplace algorithm, small changes in previous code.															;
-;																																		;
-; verion 0.5																															;
-; Errors during dividing into threads - no range, few comments.																			;
-;																																		;
-; version 0.6 																															;
-; Much more comments, correct range of possible threads.																				;
-; Errors when user chose 1 thread, errors during splitting and merging image - black strpis on filtered image.							;
-;																																		;
-; version 0.7																															;
-; Program during filtration has no errors, algorithm works correctly according to assumptions.											;
-; There are no black stripes on filred image. Filtred image is exactly the same on every amount of threads.								;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+﻿;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Temat projektu:						Filtr Laplace'a																					       ;
+; Autor:								Katarzyna Kowalczewska																			       ;
+; Przedmiot:							Języki Asemblerowe																				       ;
+; Kierunek:								Informatyka																						       ;
+; Semestr:								5																								       ;
+; Grupa dziekańska:						1																								       ;
+; Sekcja:								2																								       ;
+; Data wykonania projektu:				09.02.2021																						       ;
+; Krótki opis projektu:					Program nakłada na obraz wybrany przez użytkownika filtr Laplace'a.								       ;
+;										Filtr ten jest wykorzystywany do wyostrzenia krawędzi obrazu.									       ;
+;										Wczytany obraz, efekt końcowy oraz obliczony wcześniej histogram jest wyświetlony w programie.	       ;
+;										Biblioteka jest w C# oraz w asemblerze.																   ;
+;										Jest ona odpowiedzialna za algorytm wyostrzenia.   													   ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 .data 
 
@@ -47,25 +20,25 @@
 BYTE_IN_PIXEL_Q qword 4
 .code
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Main procedure used for applying laplace filter on image row																			;
-; ### PARAMETERS ###																													;
-;	int startingSubpixelIndex		RCX => R10			[range must be more than 0, it is checked in the proceure]						;
-;	int subpixelToFilter			RDX => R11			[range must be more than 0, it is checked in the proceure]						;	
-;	byte* original,					R8					[byte array of original image]													;
-;	byte* filtered,					R9					[byte array of filtered image]													;
-;	int* mask,		    			STACK [rbp+48] 		[laplace mask table pointer]													;
-;	int subpixelWidth    			STACK [rbp+56] 		[subpixelWidth, range must be more than 0, it is not checked in the proceure]	;
-; ### USED REGISTERS ###																												;
-; rax																																	;
-; rbx - temp value for subpixel																											;
-; rcx																																	;
-; rdx																																	;
-; r12 - loop counter																													;
-; r13 - mask subpixel index																												;
-; r14																																	;
-; r15																																	;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Main procedure used for applying laplace filter on image row																					;
+; ### PARAMETERS ###																															;
+;	int startingSubpixelIndex		RCX => R10		[range: non-negative integer, it is checked in the proceure]								;
+;	int subpixelToFilter			RDX => R11		[range: non-negative integer, it is checked in the proceure]								;	
+;	byte* original,					R8				[byte array of original image, size: the same as the size of the original image]			;
+;	byte* filtered,					R9				[byte array of filtered image, size: the same as the size of the original image]			;
+;	int* mask,		    			STACK [rbp+48] 	[laplace mask table pointer]																;
+;	int subpixelWidth    			STACK [rbp+56] 	[subpixelWidth, range: non-negative integer, it is not checked in the proceure]				;
+; ### USED REGISTERS ###																														;
+; rax																																			;
+; rbx - temp value for subpixel																													;
+; rcx																																			;
+; rdx																																			;
+; r12 - loop counter																															;
+; r13 - mask subpixel index																														;
+; r14																																			;
+; r15																																			;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 laplace proc
 
