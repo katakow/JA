@@ -96,17 +96,18 @@ namespace LaplaceFilter
                 context.ElapsedTime = "Trwa filtrowanie...";
                 context.ProgressBar = 0;
                 ProgressBar.Visibility = Visibility.Visible;
+               
                 stopwatch.Start();
-
                 for (int i = 0; i < wagtki; i++)
                 {
                     threads[i].Start(i);
                 }
+                
                 for (int i = 0; i < wagtki; i++)
                 {
                     threads[i].Join();
                 }
-
+              
                 stopwatch.Stop();
                 image = MergeImage(this.transformedImages);
                 context.FilteredImage = image;
